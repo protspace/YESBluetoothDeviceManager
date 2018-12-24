@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-class YESBluetoothDeviceManager: NSObject {
+public class YESBluetoothDeviceManager: NSObject {
 
     var centralManager: CBCentralManager!
     var peripheral: CBPeripheral!
