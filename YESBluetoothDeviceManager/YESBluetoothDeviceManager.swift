@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreBluetooth
-//import SVProgressHUD
 
 enum ScalesBleDevicaManagerMode {
     case normal
