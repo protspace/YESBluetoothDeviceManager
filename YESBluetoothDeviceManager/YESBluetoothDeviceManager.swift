@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreBluetooth
 
 public class YESBluetoothDeviceManager: NSObject {
@@ -27,16 +28,16 @@ public class YESBluetoothDeviceManager: NSObject {
     private var didUpdateCharacteristic: ((CBCharacteristic) -> Void)?
 
     public init(deviceUUID: String,
-         services: [String],
-         characteristics: [String],
-         scanTimeOut: Double = 10,
-         onTurnedOff: (() -> Void)? = nil,
-         didDiscoverPeripheral: ((CBPeripheral) -> Void)? = nil,
-         didFailToDiscoverPeripheral: (() -> Void)? = nil,
-         didConnectToPeripheral: ((CBPeripheral) -> Void)? = nil,
-         didFailToConnectPeripheral: ((CBPeripheral) -> Void)? = nil,
-         didDisconnectPeripheral: ((CBPeripheral) -> Void)? = nil,
-         didUpdateCharacteristic: ((CBCharacteristic) -> Void)? = nil ) {
+                services: [String],
+                characteristics: [String],
+                scanTimeOut: Double = 10,
+                onTurnedOff: (() -> Void)? = nil,
+                didDiscoverPeripheral: ((CBPeripheral) -> Void)? = nil,
+                didFailToDiscoverPeripheral: (() -> Void)? = nil,
+                didConnectToPeripheral: ((CBPeripheral) -> Void)? = nil,
+                didFailToConnectPeripheral: ((CBPeripheral) -> Void)? = nil,
+                didDisconnectPeripheral: ((CBPeripheral) -> Void)? = nil,
+                didUpdateCharacteristic: ((CBCharacteristic) -> Void)? = nil ) {
 
         self.deviceUUID = deviceUUID
         self.services = services.map { s in (CBUUID(string: s)) }
@@ -45,6 +46,7 @@ public class YESBluetoothDeviceManager: NSObject {
         self.onTurnedOff = onTurnedOff
         self.didDiscoverPeripheral = didDiscoverPeripheral
         self.didFailToDiscoverPeripheral = didFailToDiscoverPeripheral
+        self.didConnectToPeripheral = didConnectToPeripheral
         self.didDisconnectPeripheral = didDisconnectPeripheral
         self.didUpdateCharacteristic = didUpdateCharacteristic
         super.init()
@@ -55,11 +57,9 @@ public class YESBluetoothDeviceManager: NSObject {
         centralManager.stopScan()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
-
-    deinit {
-        print("⭕️ deiniting YESBluetoothDeviceManager")
-    }
 }
+
+// MARK: - CBCentralManagerDelegate
 extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
 
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -68,12 +68,6 @@ extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
             onTurnedOff?()
         case .poweredOn:
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            if let cachedPeripheral = centralManager.retrievePeripherals(withIdentifiers: [UUID(uuidString: deviceUUID)!]).first {
-                peripheral = cachedPeripheral
-                peripheral.delegate = self
-                centralManager.connect(peripheral, options: nil)
-                return
-            }
             centralManager.scanForPeripherals(withServices: nil)
             DispatchQueue.main.asyncAfter(deadline: .now() + scanTimeOut) {
                 guard self.centralManager.isScanning else { return }
@@ -85,9 +79,8 @@ extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
     }
 
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        print(peripheral)
-        didDiscoverPeripheral?(peripheral)
         if peripheral.identifier.uuidString == deviceUUID {
+            didDiscoverPeripheral?(peripheral)
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             centralManager.stopScan()
             self.peripheral = peripheral

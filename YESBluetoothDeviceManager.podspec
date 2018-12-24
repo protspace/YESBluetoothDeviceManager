@@ -11,6 +11,7 @@ s.author = { 'Yevgen Sagidulin' => 'protspace@gmail.com' }
 s.homepage = 'https://github.com/protspace/YESBluetoothDeviceManager'
 s.source = { :git => 'https://github.com/protspace/YESBluetoothDeviceManager.git', :tag => '0.2.8' }
 #s.framework = 'Foundation'
+#s.framework = 'UIKit'
 #s.framework = 'CoreBluetooth'
 #s.ios.framework = 'UIKit'
 s.source_files = 'YESBluetoothDeviceManager/*.swift', 'YESBluetoothDeviceManager', 'YESBluetoothDeviceManager/*.{swift}', 'YESBluetoothDeviceManager/YESBluetoothDeviceManager/*.swift'
