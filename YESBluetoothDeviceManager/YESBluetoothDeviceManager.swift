@@ -62,7 +62,7 @@ public class YESBluetoothDeviceManager: NSObject {
 }
 extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
 
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+    public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print("central.state is \(central.state.rawValue)")
 
         switch central.state {
@@ -88,7 +88,7 @@ extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
         }
     }
 
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
+    public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
         print(peripheral)
         didDiscoverPeripheral?(peripheral)
         if peripheral.identifier.uuidString == deviceUUID {
@@ -105,20 +105,20 @@ extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
         }
     }
 
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+    public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         didConnectToPeripheral?(peripheral)
         peripheral.discoverServices(services)
     }
 
-    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+    public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         didFailToConnectPeripheral?(peripheral)
     }
 
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+    public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         didDisconnectPeripheral?(peripheral)
     }
 
-    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String: Any]) {
+    public func centralManager(_ central: CBCentralManager, willRestoreState dict: [String: Any]) {
         print(dict)
     }
 }
@@ -126,7 +126,7 @@ extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
 // MARK: - CBPeripheralDelegate
 extension YESBluetoothDeviceManager: CBPeripheralDelegate {
 
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else { return }
 
         for service in services {
@@ -137,7 +137,7 @@ extension YESBluetoothDeviceManager: CBPeripheralDelegate {
         }
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else { return }
         print("all characteristics: \(characteristics)")
         for characteristic in characteristics {
@@ -148,7 +148,7 @@ extension YESBluetoothDeviceManager: CBPeripheralDelegate {
         }
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         didUpdateCharacteristic?(characteristic)
     }
 }
