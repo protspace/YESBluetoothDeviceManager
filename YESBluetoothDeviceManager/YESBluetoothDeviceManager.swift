@@ -95,13 +95,13 @@ extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
             print("discovered peripheral: \(peripheral)")
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             centralManager.stopScan()
-            peripheral = peripheral
-            peripheral.delegate = self
-            guard scalesPeripheral.state == .connected else {
-                centralManager.connect(scalesPeripheral, options: nil)
+            self.peripheral = peripheral
+            self.peripheral.delegate = self
+            guard self.peripheral.state == .connected else {
+                centralManager.connect(self.peripheral, options: nil)
                 return
             }
-            scalesPeripheral.discoverServices(services)
+            peripheral.discoverServices(services)
         }
     }
 

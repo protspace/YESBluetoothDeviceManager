@@ -5,11 +5,11 @@ s.ios.deployment_target = '12.0'
 s.name = 'YESBluetoothDeviceManager'
 s.summary = 'YESBluetoothDeviceManager helps to interact with BLE devices'
 s.requires_arc = true
-s.version = '0.2.2'
+s.version = '0.2.4'
 s.license = { :type => 'MIT', :file => 'LICENSE' }
 s.author = { 'Yevgen Sagidulin' => 'protspace@gmail.com' }
 s.homepage = 'https://github.com/protspace/YESBluetoothDeviceManager'
-s.source = { :git => 'https://github.com/protspace/YESBluetoothDeviceManager.git', :tag => '0.2.2' }
+s.source = { :git => 'https://github.com/protspace/YESBluetoothDeviceManager.git', :tag => '0.2.4' }
 #s.framework = 'Foundation'
 #s.framework = 'CoreBluetooth'
 #s.ios.framework = 'UIKit'
