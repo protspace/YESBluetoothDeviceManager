@@ -12,7 +12,7 @@ s.homepage = 'https://github.com/protspace/YESBluetoothDeviceManager'
 s.source = { :git => 'https://github.com/protspace/YESBluetoothDeviceManager.git', :tag => '#{s.version}' }
 s.framework = 'Foundation'
 s.framework = 'CoreBluetooth'
-s.ios.frameworkios = 'UIKit'
+s.ios.framework = 'UIKit'
 s.source_files = 'YESBluetoothDeviceManager/YESBluetoothDeviceManager/*.{swift}'
 #s.resources = 'YESBluetoothDeviceManager/**/*.{xcassets}'
 s.swift_version = '4.2'
