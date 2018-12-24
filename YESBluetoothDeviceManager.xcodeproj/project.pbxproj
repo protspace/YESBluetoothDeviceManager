@@ -10,6 +10,7 @@
 		B7B48A0721D0D96D00B40860 /* YESBluetoothDeviceManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B489FD21D0D96C00B40860 /* YESBluetoothDeviceManager.framework */; };
 		B7B48A0C21D0D96D00B40860 /* YESBluetoothDeviceManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B48A0B21D0D96D00B40860 /* YESBluetoothDeviceManagerTests.swift */; };
 		B7B48A0E21D0D96D00B40860 /* YESBluetoothDeviceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B48A0021D0D96C00B40860 /* YESBluetoothDeviceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7B48A1821D0DAE500B40860 /* YESBluetoothDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B48A1721D0DAE500B40860 /* YESBluetoothDeviceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		B7B48A0621D0D96D00B40860 /* YESBluetoothDeviceManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YESBluetoothDeviceManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B48A0B21D0D96D00B40860 /* YESBluetoothDeviceManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YESBluetoothDeviceManagerTests.swift; sourceTree = "<group>"; };
 		B7B48A0D21D0D96D00B40860 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7B48A1721D0DAE500B40860 /* YESBluetoothDeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YESBluetoothDeviceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		B7B489FF21D0D96C00B40860 /* YESBluetoothDeviceManager */ = {
 			isa = PBXGroup;
 			children = (
+				B7B48A1721D0DAE500B40860 /* YESBluetoothDeviceManager.swift */,
 				B7B48A0021D0D96C00B40860 /* YESBluetoothDeviceManager.h */,
 				B7B48A0121D0D96C00B40860 /* Info.plist */,
 			);
@@ -148,6 +151,7 @@
 				TargetAttributes = {
 					B7B489FC21D0D96C00B40860 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 					B7B48A0521D0D96D00B40860 = {
 						CreatedOnToolsVersion = 10.1;
@@ -194,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7B48A1821D0DAE500B40860 /* YESBluetoothDeviceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +346,7 @@
 		B7B48A1221D0D96D00B40860 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -358,6 +364,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mydigicode.YESBluetoothDeviceManager;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -366,6 +373,7 @@
 		B7B48A1321D0D96D00B40860 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -391,6 +399,7 @@
 		B7B48A1521D0D96D00B40860 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GX7G9DZM3R;
 				INFOPLIST_FILE = YESBluetoothDeviceManagerTests/Info.plist;
@@ -409,6 +418,7 @@
 		B7B48A1621D0D96D00B40860 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GX7G9DZM3R;
 				INFOPLIST_FILE = YESBluetoothDeviceManagerTests/Info.plist;
