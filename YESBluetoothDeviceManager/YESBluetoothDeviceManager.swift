@@ -26,7 +26,7 @@ public class YESBluetoothDeviceManager: NSObject {
     private var didDisconnectPeripheral: ((CBPeripheral) -> Void)?
     private var didUpdateCharacteristic: ((CBCharacteristic) -> Void)?
 
-    init(deviceUUID: String?,
+    public init(deviceUUID: String?,
          services: [String],
          characteristics: [String],
          scanTimeOut: Double = 10,
