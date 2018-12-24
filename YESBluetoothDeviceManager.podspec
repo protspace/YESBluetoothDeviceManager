@@ -9,7 +9,7 @@ s.version = '0.1.0'
 s.license = { :type => 'MIT', :file => 'LICENSE' }
 s.author = { 'Yevgen Sagidulin' => 'protspace@gmail.com' }
 s.homepage = 'https://github.com/protspace/YESBluetoothDeviceManager'
-s.source = { :git => 'https://github.com/protspace/YESBluetoothDeviceManager.git', :tag => '#{s.version}' }
+s.source = { :git => 'https://github.com/protspace/YESBluetoothDeviceManager.git', :tag => '0.1.0' }
 s.framework = 'Foundation'
 s.framework = 'CoreBluetooth'
 s.ios.framework = 'UIKit'
