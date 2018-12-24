@@ -14,7 +14,7 @@ public class YESBluetoothDeviceManager: NSObject {
     var centralManager: CBCentralManager!
     var peripheral: CBPeripheral!
 
-    private let deviceUUID: String?
+    private let deviceUUID: String
     private var services: [CBUUID]
     private var characteristics: [CBUUID]
     private let scanTimeOut: Double
@@ -26,7 +26,7 @@ public class YESBluetoothDeviceManager: NSObject {
     private var didDisconnectPeripheral: ((CBPeripheral) -> Void)?
     private var didUpdateCharacteristic: ((CBCharacteristic) -> Void)?
 
-    public init(deviceUUID: String?,
+    public init(deviceUUID: String,
          services: [String],
          characteristics: [String],
          scanTimeOut: Double = 10,
@@ -63,21 +63,17 @@ public class YESBluetoothDeviceManager: NSObject {
 extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
 
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        print("central.state is \(central.state.rawValue)")
-
         switch central.state {
         case .unknown, .resetting, .unsupported, .unauthorized, .poweredOff:
             onTurnedOff?()
         case .poweredOn:
-            print("central.state is .poweredOn")
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//            if let cachedPeripheral = centralManager.retrievePeripherals(withIdentifiers: [testCBUUID!]).first {
-//                peripheral = cachedPeripheral
-//                peripheral.delegate = self
-//                centralManager.connect(peripheral, options: nil)
-//                SVProgressHUD.dismiss()
-//                return
-//            }
+            if let cachedPeripheral = centralManager.retrievePeripherals(withIdentifiers: [UUID(uuidString: deviceUUID)!]).first {
+                peripheral = cachedPeripheral
+                peripheral.delegate = self
+                centralManager.connect(peripheral, options: nil)
+                return
+            }
             centralManager.scanForPeripherals(withServices: nil)
             DispatchQueue.main.asyncAfter(deadline: .now() + scanTimeOut) {
                 guard self.centralManager.isScanning else { return }
@@ -92,7 +88,6 @@ extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
         print(peripheral)
         didDiscoverPeripheral?(peripheral)
         if peripheral.identifier.uuidString == deviceUUID {
-            print("discovered peripheral: \(peripheral)")
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             centralManager.stopScan()
             self.peripheral = peripheral
@@ -139,7 +134,6 @@ extension YESBluetoothDeviceManager: CBPeripheralDelegate {
 
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else { return }
-        print("all characteristics: \(characteristics)")
         for characteristic in characteristics {
 
             if let _ = self.characteristics.first(where: { $0.uuidString == characteristic.uuid.uuidString }) {
