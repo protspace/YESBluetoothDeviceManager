@@ -9,17 +9,10 @@
 import Foundation
 import CoreBluetooth
 
-enum ScalesBleDevicaManagerMode {
-    case normal
-    case settings
-}
-
-
-// MARK: - CBCentralManagerDelegate
-class ScalesBleDeviceManager: NSObject {
+class YESBluetoothDeviceManager: NSObject {
 
     var centralManager: CBCentralManager!
-    var scalesPeripheral: CBPeripheral!
+    var peripheral: CBPeripheral!
 
     private let deviceUUID: String?
     private var services: [CBUUID]
@@ -64,10 +57,10 @@ class ScalesBleDeviceManager: NSObject {
     }
 
     deinit {
-        print("⭕️ deiniting ScalesBleDevicaManager")
+        print("⭕️ deiniting YESBluetoothDeviceManager")
     }
 }
-extension ScalesBleDeviceManager: CBCentralManagerDelegate {
+extension YESBluetoothDeviceManager: CBCentralManagerDelegate {
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print("central.state is \(central.state.rawValue)")
@@ -79,9 +72,9 @@ extension ScalesBleDeviceManager: CBCentralManagerDelegate {
             print("central.state is .poweredOn")
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
 //            if let cachedPeripheral = centralManager.retrievePeripherals(withIdentifiers: [testCBUUID!]).first {
-//                scalesPeripheral = cachedPeripheral
-//                scalesPeripheral.delegate = self
-//                centralManager.connect(scalesPeripheral, options: nil)
+//                peripheral = cachedPeripheral
+//                peripheral.delegate = self
+//                centralManager.connect(peripheral, options: nil)
 //                SVProgressHUD.dismiss()
 //                return
 //            }
@@ -102,8 +95,8 @@ extension ScalesBleDeviceManager: CBCentralManagerDelegate {
             print("discovered peripheral: \(peripheral)")
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             centralManager.stopScan()
-            scalesPeripheral = peripheral
-            scalesPeripheral.delegate = self
+            peripheral = peripheral
+            peripheral.delegate = self
             guard scalesPeripheral.state == .connected else {
                 centralManager.connect(scalesPeripheral, options: nil)
                 return
@@ -114,7 +107,7 @@ extension ScalesBleDeviceManager: CBCentralManagerDelegate {
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         didConnectToPeripheral?(peripheral)
-        scalesPeripheral.discoverServices(services)
+        peripheral.discoverServices(services)
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -131,7 +124,7 @@ extension ScalesBleDeviceManager: CBCentralManagerDelegate {
 }
 
 // MARK: - CBPeripheralDelegate
-extension ScalesBleDeviceManager: CBPeripheralDelegate {
+extension YESBluetoothDeviceManager: CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else { return }
@@ -159,65 +152,3 @@ extension ScalesBleDeviceManager: CBPeripheralDelegate {
         didUpdateCharacteristic?(characteristic)
     }
 }
-
-////Settings
-//extension ScalesBleDeviceManager {
-//
-//    func resetTare() {
-//        guard let c = tareCharacteristics else {
-//            return
-//        }
-//        let data = ScalesTare.tare.rawValue.hexaData
-//        scalesPeripheral.writeValue(data, for: c, type: .withResponse)
-//    }
-//
-//    func setZeroPoint(_ on: Bool) {
-//        guard let c = settingsCharacteristics else {
-//            return
-//        }
-//        let value = on ? ScalesZeroPoint.on.rawValue : ScalesZeroPoint.off.rawValue
-//        var data = c.value!
-//        data[4] = value.hexaBytes.first!
-//        scalesPeripheral.writeValue(data, for: c, type: .withResponse)
-//    }
-//
-//    func setBacklight(_ mode: ScalesBacklight) {
-//        guard let c = settingsCharacteristics else {
-//            return
-//        }
-//        let value = mode.rawValue
-//        var data = c.value!
-//        data[1] = value.hexaBytes.first!
-//        scalesPeripheral.writeValue(data, for: c, type: .withResponse)
-//    }
-//
-//    func setUnit(_ unit: ScalesUnit) {
-//        guard let c = settingsCharacteristics else {
-//            return
-//        }
-//        let value = unit.rawValue
-//        var data = c.value!
-//        data[3] = value.hexaBytes.first!
-//        scalesPeripheral.writeValue(data, for: c, type: .withResponse)
-//    }
-//
-//    func setRange(_ range: ScalesRange) {
-//        guard let c = settingsCharacteristics else {
-//            return
-//        }
-//        let value = range.rawValue
-//        var data = c.value!
-//        data[2] = value.hexaBytes.first!
-//        scalesPeripheral.writeValue(data, for: c, type: .withResponse)
-//    }
-//
-//    func setAutoOff(_ mode: ScalesAutoOff) {
-//        guard let c = settingsCharacteristics else {
-//            return
-//        }
-//        let value = mode.rawValue
-//        var data = c.value!
-//        data[0] = value.hexaBytes.first!
-//        scalesPeripheral.writeValue(data, for: c, type: .withResponse)
-//    }
-//}
