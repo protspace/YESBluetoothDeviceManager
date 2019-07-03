@@ -1,5 +1,10 @@
 # YESBluetoothDeviceManager
 
+<p align="center">
+    <img src="https://img.shields.io/badge/Swift-4.2-orange.svg" />
+    <img src="https://img.shields.io/badge/protspace-Twitter%3A%20%40protspace-green.svg" alt="Twitter: @protspace" />
+</p>
+
 YESBluetoothDeviceManager is a tiny package that helps to easily interact with CBPeripheral device.
 
 ## Usage
