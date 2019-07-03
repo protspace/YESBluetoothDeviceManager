@@ -2,6 +2,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/badge/Swift-4.2-orange.svg" />
+    <img src="https://img.shields.io/badge/test%20coverage-39%25-yellow.svg" />
     <img src="https://img.shields.io/badge/protspace-Twitter%3A%20%40protspace-green.svg" alt="Twitter: @protspace" />
 </p>
 
